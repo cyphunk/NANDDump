@@ -5,10 +5,10 @@
     * x8 bit io bus (for x16 modify addressing schemas)
 
    CHANGELOG:
-    20100930  cyphunk               
+    20100930  cyphunk
     20120912  luca melette+cyphunk
     20140522  cyphunk
-    20150908  gina horstman+cyphunk
+    20150908  gina hortenbach+cyphunk
 
    Before using change:
     * Teensy/Arduino pin definitions for how you have connected
