@@ -36,10 +36,10 @@
 
     Linux:
      stty -F /dev/ttyACM* 115200; cat /dev/ttyACM* > dump
-     tail -f dump | xxd -c 66 | cat -c
+     tail -f dump | xxd -c 66 | cat
     OSX:
      stty -f /dev/tty.usb* 115200; cat /dev/cu.usb* > dump
-     tail -f dump | xxd -c 66 | cat
+     tail -f dump | xxd -c 66 | cat -c
 
    The dump will start 10 seconds after loading the code.
 
