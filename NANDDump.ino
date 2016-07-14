@@ -35,10 +35,12 @@
    data. To record this as a binary blob you can try:
 
     Linux:
-     stty -F /dev/ttyACM* 115200; cat /dev/ttyACM* > dump
+     stty -F /dev/ttyACM* 115200 -icrnl -imaxbel -opost -onlcr -isig -icanon -echo
+     cat /dev/ttyACM* > dump
      tail -f dump | xxd -c 66 | cat
     OSX:
-     stty -f /dev/tty.usb* 115200; cat /dev/cu.usb* > dump
+     stty -f /dev/tty.usb* 115200
+     cat /dev/cu.usb* > dump
      tail -f dump | xxd -c 66 | cat -c
 
    The dump will start 10 seconds after loading the code.
@@ -59,7 +61,7 @@
    used to monitor the dump.
 */
 
-#define INTERACTIVE
+//#define INTERACTIVE
 #define INVERTDATA
 
 
@@ -329,7 +331,7 @@ void loop () {
           *ptr = 0;
           ptr = page;
           *ptr = 0;
-          p("> ");
+          p("\n> ");
         }
       }
     }
