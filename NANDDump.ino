@@ -62,7 +62,8 @@
 */
 
 //#define INTERACTIVE
-#define INVERTDATA
+// invert the data portion of blocks (and not oob):
+//#define INVERTDATA
 
 
 #define PRINTBLOCKIDENT // 32 byte block prefix
