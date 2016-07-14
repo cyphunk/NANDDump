@@ -34,8 +34,12 @@
    Now when you connect the serial console you will get raw
    data. To record this as a binary blob you can try:
 
-     stty -f /dev/tty.usb* 115200; cat /dev/cu.usb* > dump
+    Linux:
+     stty -F /dev/ttyACM* 115200; cat /dev/ttyACM* > dump
      tail -f dump | xxd -c 66 | cat -c
+    OSX:
+     stty -f /dev/tty.usb* 115200; cat /dev/cu.usb* > dump
+     tail -f dump | xxd -c 66 | cat
 
    The dump will start 10 seconds after loading the code.
 
@@ -86,9 +90,16 @@
 //#define PAGESIZE 2112
 //#define NUMPAGES 131072      // (2048*64) // num of blocks (2038) times pages per block (64)
 // FOR MT29F4G08ABBDAH4-IT_D
-#define PAGESIZE 2112
-#define NUMPAGES 262144        // (4096*64) // num of blocks (4096) times pages per block (64)
+//#define PAGESIZE 2112
+//#define NUMPAGES 262144        // (4096*64) // num of blocks (4096) times pages per block (64)
 //Device ID:    2C AC 90 15 56
+// FOR MT29F2G08AAD
+//#define PAGESIZE 2112
+//#define NUMPAGES 131072        // (2048*64)
+// FOR MT29F1G08ABA
+#define PAGESIZE 2112
+#define NUMPAGES 65536       //(1024*64)
+//Device ID: 2C F1 80 95 04
 
 /*
   ADDING NEW CHIPS
@@ -165,7 +176,8 @@
 // bit order: lowest i/o bit at io_pins[0]
 //int io_pins[] = { PIN_B6 , PIN_B5 , PIN_B1 , PIN_B0 , PIN_F0 , PIN_F1 , PIN_F6 , PIN_F7  };
 //int io_pins[] = { PIN_B0 , PIN_B1 , PIN_B2 , PIN_B3 , PIN_B4 , PIN_B5 , PIN_B6 , PIN_B7  }; // smp d
-int io_pins[] = { PIN_B0 , PIN_B6 , PIN_B5 , PIN_B4 , PIN_B3 , PIN_B7 , PIN_D2 , PIN_D3  }; // mit gina
+//int io_pins[] = { PIN_B0 , PIN_B6 , PIN_B5 , PIN_B4 , PIN_B3 , PIN_B7 , PIN_D2 , PIN_D3  }; // mit gina
+int io_pins[] = { PIN_D0 , PIN_D1 , PIN_D2 , PIN_D3 , PIN_C4 , PIN_C5 , PIN_C6 , PIN_C7  }; // workshop
 int io_pinslen = sizeof(io_pins)/sizeof(io_pins[0]);
 
 //R/B READY BUSY
@@ -196,13 +208,13 @@ int ALE = PIN_D6;
 int WE  = PIN_D1;
 int WP  = PIN_D0;*/
 
-int RB  = PIN_C6; // not connected actually
-int RE  = PIN_C1;
-int CE  = PIN_C0;
-int CLE = PIN_D7;
-int ALE = PIN_D6;
-int WE  = PIN_D1;
-int WP  = PIN_D0;
+int RB  = PIN_F0; // not connected actually
+int RE  = PIN_F4;
+int CE  = PIN_F3;
+int CLE = PIN_B1;
+int ALE = PIN_B0;
+int WE  = PIN_B3;
+int WP  = PIN_B2;
 
 void p(char *fmt, ...);
 
@@ -216,10 +228,10 @@ void setup (void) {
   pinMode(WP,  OUTPUT);
 
   //Serial.begin(9600);
-  Serial.begin(38400);
+  //Serial.begin(38400);
 
   // 230400 is the MAX i've been able to get with 16Mhz at 3.3v, and only when doubled from 115200
-  //Serial.begin(115200);
+  Serial.begin(115200);
   //UCSR0A |= 2; //double the baud to 230400 - doesnt seem to work
   //Serial.begin(230400);
   //UCSR0A |= 2; //double the baud to 460800
